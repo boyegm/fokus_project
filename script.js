@@ -43,6 +43,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (tempoDecorridoEmSegundos <= 0) {
             beep.play();
             alert('tempo finalizado');
+            const focoAtivo = html.getAttribute('data-contexto') == 'foco';
+            if (focoAtivo) {
+                const evento = new CustomEvent('FocoFinalizado');
+                document.dispatchEvent(evento);
+            }
             zerar();
             return;
         }
@@ -107,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function mostraTempo() {
         const minutos = Math.floor(tempoDecorridoEmSegundos / 60).toString().padStart(2, '0');
         const segundos = (tempoDecorridoEmSegundos % 60).toString().padStart(2, '0');
-        tempoTela.innerHTML = `${minutos}:${segundos}`;
+        tempoTela.textContent = `${minutos}:${segundos}`;
     }
 
     mostraTempo();
